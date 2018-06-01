@@ -9,7 +9,7 @@ before_build:
 build_script:
   - npm run build
 
-post_build:
+after_build:
   - npm install -g forever
   - ps: get-process -name node
   - forever start ./lib/app.js
