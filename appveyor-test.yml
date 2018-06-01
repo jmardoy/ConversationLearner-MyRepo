@@ -20,7 +20,7 @@ test_script:
   # run tests
   - ps: cd .\test\e2e\
   - ps: ls
-  - npm install nightwatch -g --save-dev
+  - npm install nightwatch
   - npm install jdk -g --save-dev
   - ps: ls .\nightwatch\bin\
   - node nightwatch -t .\tests
