@@ -1,0 +1,22 @@
+{
+  "name": "demotest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chromedriver": "^2.36.0"
+  },
+  "devDependencies": {
+    "jdk": "0.0.0",
+    "nightwatch": "file:nightwatch"
+  },
+  "scripts": {
+    "pretest:smoke": "npm run runsdk & npm run runui",
+    "runsdk": "start cmd.exe @cmd /k \"node ../../lib/app.js && exit 1\"",
+    "runui": "start cmd.exe @cmd /k \"node ../../lib/ui.js && exit 1\"",
+    "test:test": "node nightwatch -t .\\test\\nightwatchtest.js",
+    "test:smoke": "node nightwatch -t .\\test\\smoketest.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
