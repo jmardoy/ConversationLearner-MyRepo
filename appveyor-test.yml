@@ -20,8 +20,9 @@ test_script:
   # run tests
   - ps: cd .\test\e2e\
   - ps: ls
-  - npm install nightwatch -g --save-dev
+    - npm install nightwatch -g --save-dev
   - npm install jdk -g --save-dev
-  - node nightwatch -t .\e2e\smoketest.js
+  - ps: ls .\nightwatch\bin\
+  - node nightwatch -t .\tests
   - ps: get-process -name node
   - ps: stop-process -name node
