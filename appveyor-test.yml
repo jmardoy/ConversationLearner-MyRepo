@@ -9,11 +9,18 @@ before_build:
 build_script:
   - npm run build
 
+post_build:
+  - npm install -g forever
+  - ps: get-process -name node
+  - forever start ./lib/app.js
+  - forever start ./lib/ui.js
+  - ps: get-process -name node
+
 test_script:
   # run tests
-  - npm run lunchsdk
-  - npm run lunchui
-  - cd test\e2e
+  - ps: cd test\e2e
   - npm install nightwatch -g --save-dev
   - npm install jdk -g --save-dev
   - node nightwatch -t .\e2e\smoketest.js
+  - ps: get-process -name node
+  - ps: stop-process -name node
