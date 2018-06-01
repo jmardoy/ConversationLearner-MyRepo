@@ -10,6 +10,8 @@
     "nodemon": "nodemon",
     "prestart": "npm run build",
     "start": "node ./lib/app.js",
+    "lunchsdk": "start cmd.exe @cmd /k \"node ./lib/app.js && exit 1\"",
+    "lunchui": "start cmd.exe @cmd /k \"node ./lib/ui.js && exit 1\"",
     "startnobuild": "node ./lib/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
