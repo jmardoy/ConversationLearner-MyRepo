@@ -11,9 +11,9 @@ build_script:
 
 after_build:
   - npm install -g forever
-  - ps: get-process -name node
   - forever start ./lib/app.js
   - forever start ./lib/ui.js
+  - ps: dir
   - ps: get-process -name node
 
 test_script:
