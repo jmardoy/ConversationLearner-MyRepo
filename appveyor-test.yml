@@ -9,7 +9,7 @@ before_build:
 build_script:
   - npm run build
 
- test_script:
+test_script:
   # run tests
     - "start cmd.exe @cmd /k \"node ./lib/app.js && exit 1\""
     - "start cmd.exe @cmd /k \"node ./lib/ui.js && exit 1\"" 
