@@ -11,15 +11,13 @@ build_script:
 
 after_build:
   - npm install -g forever
-  - forever start ./lib/app.js
-  - forever start ./lib/ui.js
-  - ps: dir
+  - forever start ./lib/app.js 
+  - forever start ./lib/ui.js 
   - ps: get-process -name node
 
 test_script:
   # run tests
   - ps: cd .\test\e2e\
-  - ps: ls
   - npm install jdk -g --save-dev
   - npm install 
   - node nightwatch

@@ -12,7 +12,8 @@ module.exports = {
             .useXpath()
             .waitForElementVisible(newappbtn, 3000, false)
             .click(newappbtn)
-            .useCss();
+            .useCss()
+            .pause(2000);
 
         var n = Date.now() - 1527837000000;
         cl.waitForElementVisible('@appname', 4000)
