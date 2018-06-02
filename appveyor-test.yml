@@ -14,13 +14,16 @@ after_build:
   - forever start ./lib/app.js 
   - forever start ./lib/ui.js 
   - ps: get-process -name node
-
-test_script:
-  # run tests
+before_test:
   - ps: cd .\test\e2e\
   - npm install jdk -g --save-dev
   - npm install 
+
+test_script:
+  # run tests
   - node nightwatch
+
+on_failure:
   - ps: get-process -name node
   - ps: stop-process -name node
   - ps:
