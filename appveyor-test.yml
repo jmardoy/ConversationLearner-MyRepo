@@ -28,24 +28,16 @@ on_failure:
   - ps: get-process -name node
   - ps: stop-process -name node
   - ps:
-     # {  $testResultsFile = ".\reports\*.xml"
-     #   $res = Invoke-Pester -OutputFormat NUnitXml -OutputFile $testResultsFile -PassThru
-     #   (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testResultsFile))
-     #   if ($res.FailedCount -gt 0) { 
-     #       throw "$($res.FailedCount) tests failed."
-     #   }
-        {
+      {
           $wc = New-Object 'System.Net.WebClient'
           $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\reports\smoketest.xml))
-        }
       }
 
   notifications:
   - provider: Email
     to:
-      - commitAuthorEmail
-      - v-maenr@microsoft.com
-      - "v-maenr@microsoft.com"
+      - '{{commitAuthorEmail}}'
+      - 'v-maenr@microsoft.com'
     on_build_success: true
     on_build_failure: true
     on_build_status_changed: true
