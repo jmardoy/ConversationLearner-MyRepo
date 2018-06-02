@@ -1,1 +1,1 @@
-require('./nightwatch/bin/runner.js');
+require('./node_modules/nightwatch/bin/runner.js');

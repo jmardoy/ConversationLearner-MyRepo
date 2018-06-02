@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\test",
+    "\\test\\e2e",
+    "\\test\\e2e\\pages",
+    "\\test\\e2e\\tests"
+  ],
+  "SelectedNode": "\\test\\e2e\\package-lock.json",
+  "PreviewInSolutionExplorer": false
+}
