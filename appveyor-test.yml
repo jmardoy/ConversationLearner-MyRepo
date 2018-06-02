@@ -14,6 +14,7 @@ after_build:
   - forever start ./lib/app.js 
   - forever start ./lib/ui.js 
   - ps: get-process -name node
+
 before_test:
   - ps: cd .\test\e2e\
   - npm install jdk -g --save-dev
@@ -27,9 +28,34 @@ on_failure:
   - ps: get-process -name node
   - ps: stop-process -name node
   - ps:
-        $testResultsFile = ".\reports\*.xml"
+      {  $testResultsFile = ".\reports\*.xml"
         $res = Invoke-Pester -OutputFormat NUnitXml -OutputFile $testResultsFile -PassThru
         (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testResultsFile))
         if ($res.FailedCount -gt 0) { 
             throw "$($res.FailedCount) tests failed."
         }
+      }
+
+  notifications:
+  - provider: Email
+    to:
+      - user1@email.com
+      - user2@email.com
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
+    subject: 'Build {{status}}'                  # optional
+    message: "{{template_variable_1}}, {{template_variable_2}}, ..."    # optional
+    {<div style="font-family:'Segoe UI',Arial,Sans-Serif;font-size:10pt;">
+    {{#passed}}
+    <h1 style="font-size: 150%;font-weight:normal; color:#078DC7;"><a href="{{buildUrl}}" style="color:#078DC7;">Build {{projectName}} {{buildVersion}} completed</a></h1>{{/passed}}
+    {{#failed}}
+    <h1 style="font-size: 150%;font-weight:normal; color:#ff3228;"><a href="{{buildUrl}}" style="color:#ff3228;">Build {{projectName}} {{buildVersion}} failed</a></h1>{{/failed}}
+    <p style="color: #888;">
+        Commit <a href="{{commitUrl}}">{{commitId}}</a> by <a href="mailto:{{commitAuthorEmail}}">{{commitAuthor}}</a> on {{commitDate}}:
+        <br />
+        <span style="font-size: 110%;color:#222;">{{commitMessage}}</span>
+    </p>
+    <p><a href="{{notificationSettingsUrl}}" style="font-size:85%;color:#999;">Configure your notification preferences</a></p>
+     </div>
+    }
