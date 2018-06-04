@@ -23,10 +23,6 @@ before_test:
 test_script:
   # run tests
   - node nightwatch
-
-on_failure:
-  - ps: get-process -name node
-  - ps: stop-process -name node
   - ps:
     # Execute the script analyzer
     $results = Invoke-ScriptAnalyzer -Path .\reports -Recurse
@@ -40,8 +36,15 @@ on_failure:
     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
     # Fail if thre are issues
     if($results.Count -gt 0){throw "ScriptAnalyzer found $($results.Count) issues"}
+  - ps: get-process -name node
+  - ps: stop-process -name node
 
-  notifications:
+on_failure:
+  # On failure
+  - ps:
+    Write-Host "Test Failed - " (Get-Date).DateTime
+    
+notifications:
   - provider: Email
     to:
       - '{{commitAuthorEmail}}'
