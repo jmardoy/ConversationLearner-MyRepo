@@ -28,8 +28,7 @@ test_script:
 
 on_failure:
   # On failure
-  - ps:
-    Write-Host "Test Failed - " (Get-Date).DateTime
+  - ps: Write-Host "Test Failed - " (Get-Date).DateTime
 
 notifications:
   - provider: Email
