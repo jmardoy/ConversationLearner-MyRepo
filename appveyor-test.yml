@@ -17,7 +17,7 @@ after_build:
 
 before_test:
   - ps: cd .\test\e2e\
-  - npm install jdk -g --save-dev
+  - npm install jdk -g
   - npm install 
 
 test_script:
@@ -30,10 +30,9 @@ on_failure:
   - ps:
       {
           $testReportPath = .\reports\smoketest.xml
-          #if([System.IO.File]::Exists($testReportPath)){
-              $wc = New-Object 'System.Net.WebClient'
-              $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testReportPath))
-          #  }
+          $wc = New-Object 'System.Net.WebClient'
+          $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testReportPath))
+            
       }
 
   notifications:
