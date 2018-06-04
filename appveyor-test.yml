@@ -25,6 +25,13 @@ test_script:
   - node nightwatch
   - ps: get-process -name node
   - ps: stop-process -name node
+  - ps: >-
+      $files = Get-ChildItem .\reports
+      foreach ($file in $files) {
+      # upload results to AppVeyor
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $file))
+      }
 
 on_failure:
   # On failure
@@ -57,3 +64,4 @@ notifications:
   on_build_success: true
   on_build_failure: true
   on_build_status_changed: true
+  
