@@ -25,7 +25,7 @@ test_script:
   - node nightwatch
   - ps:
     # Execute the script analyzer
-    $results = Invoke-ScriptAnalyzer -Path .\reports -Recurse
+    $results = Invoke-ScriptAnalyzer -Path .\reports -Recurse |
     # Format the results
     $header = "<testsuite tests=`"$($results.Count)`">" 
     $body = $results | ForEach-Object {"<testcase classname=`"analyzer`" name=`"$($_.RuleName)`"><failure type=`"$($_.ScriptName)`">$($_.Message)</failure></testcase>"}
@@ -43,7 +43,7 @@ on_failure:
   # On failure
   - ps:
     Write-Host "Test Failed - " (Get-Date).DateTime
-    
+
 notifications:
   - provider: Email
     to:
