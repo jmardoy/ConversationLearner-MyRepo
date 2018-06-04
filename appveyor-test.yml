@@ -30,10 +30,10 @@ on_failure:
   - ps:
       {
           $testReportPath = .\reports\smoketest.xml
-          if([System.IO.File]::Exists($testReportPath)){
+          #if([System.IO.File]::Exists($testReportPath)){
               $wc = New-Object 'System.Net.WebClient'
               $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testReportPath))
-            }
+          #  }
       }
 
   notifications:
