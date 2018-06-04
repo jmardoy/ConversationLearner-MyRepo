@@ -23,16 +23,6 @@ before_test:
 test_script:
   # run tests
   - node nightwatch
-  - ps:
-    # Execute the script analyzer
-    $results = Invoke-ScriptAnalyzer -Path .\reports -Recurse |
-    $header = "<testsuite tests=`"$($results.Count)`">" 
-    $body = $results | ForEach-Object {"<testcase classname=`"analyzer`" name=`"$($_.RuleName)`"><failure type=`"$($_.ScriptName)`">$($_.Message)</failure></testcase>"}
-    $footer = "</testsuite>"
-    $header + $body +$footer | out-file .\TestsResults.xml
-    $wc = New-Object 'System.Net.WebClient'
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
-    if($results.Count -gt 0){throw "ScriptAnalyzer found $($results.Count) issues"}
   - ps: get-process -name node
   - ps: stop-process -name node
 
