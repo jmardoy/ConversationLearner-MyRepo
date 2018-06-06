@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/nightwatch": "^0.9.8",
     "chromedriver": "^2.36.0",
     "nightwatch": "^0.9.21"
   },
